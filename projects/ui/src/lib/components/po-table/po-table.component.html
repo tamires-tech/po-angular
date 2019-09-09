@@ -7,7 +7,7 @@
     <div class="po-table-main-container">
       <div #tableWrapper
         class="po-table-wrapper"
-        [class.po-table-header-fixed-columns-pixels]="verifyWidthColumnsPixels()"
+        [class.po-table-header-fixed-columns-pixels]="everyColumnsWidthPixels"
         [style.opacity]="tableOpacity">
 
         <div class="po-table-container" *ngIf="height" [style.height.px]="heightTableContainer">
@@ -25,8 +25,8 @@
     </div>
   </div>
 
-  <div class="po-table-footer" *ngIf="hasItems() && getSubtitleColumns().length">
-    <div *ngFor="let column of getSubtitleColumns()">
+  <div class="po-table-footer" *ngIf="hasItems && subtitleColumns.length">
+    <div *ngFor="let column of subtitleColumns">
       <po-table-subtitle-footer [p-literals]="literals" [p-subtitles]="column.subtitles"></po-table-subtitle-footer>
     </div>
   </div>
@@ -47,7 +47,7 @@
     [class.po-table-layout-fixed]="hideTextOverflow">
     <thead>
       <tr [class.po-table-header]="!height">
-        <th *ngIf="checkbox && hasItems()" class="po-table-column-checkbox">
+        <th *ngIf="checkbox && hasItems" class="po-table-column-checkbox">
           <div [class.po-table-header-fixed-inner]="height">
             <input *ngIf="!hideSelectAll" type="checkbox" class="po-table-checkbox"
             [class.po-table-checkbox-checked]="selectAll"
@@ -55,46 +55,45 @@
             <label *ngIf="!hideSelectAll" class="po-table-checkbox-label po-clickable" (click)="selectAllRows()"></label>
           </div>
         </th>
-        <th *ngIf="hasItems() && !hideDetail && getColumnMasterDetail() !== undefined || hasRowTemplate"
+        <th *ngIf="hasItems && !hideDetail && columnMasterDetail || hasRowTemplate"
           class="po-table-header-column po-table-header-master-detail">
         </th>
-        <th *ngIf="!hasColumns()" class="po-table-header-column po-text-center">{{ literals.noColumns }}</th>
-        <th *ngFor="let column of getMainColumns(); let i = index" #headersTable
+        <th *ngIf="!hasColumns" class="po-table-header-column po-text-center">{{ literals.noColumns }}</th>
+        <th *ngFor="let column of mainColumns; let i = index" #headersTable
           class="po-table-header-ellipsis"
           [style.width]="column.width" [style.max-width]="column.width" [style.min-width]="column.width"
           [class.po-clickable]="sort"
           [class.po-table-column-right]= "column.type === 'currency' || column.type === 'number'"
           [class.po-table-header-subtitle]="column.type === 'subtitle'"
           (click)="sortColumn(column)">
-            <div *ngIf="height" class="po-table-header-fixed-inner">
-              <ng-container *ngTemplateOutlet="contentHeaderTemplate"></ng-container>
-            </div>
-            <div *ngIf="!height">
-              <ng-container *ngTemplateOutlet="contentHeaderTemplate"></ng-container>
-            </div>
-            <ng-template #contentHeaderTemplate>
-              <span *ngIf="sort"
-                [class.po-table-header-icon-unselected]= "sortedColumn?.property !== column"
-                [class.po-table-header-icon-descending]= "sortedColumn?.property === column && sortedColumn.ascending"
-                [class.po-table-header-icon-ascending]= "sortedColumn?.property === column && !sortedColumn.ascending">
-              </span>
-              <span
-                class="po-table-header-ellipsis po-table-header-block"
-                [p-tooltip]="tooltipText"
-                (mouseenter)="tooltipMouseEnter($event)"
-                (mouseleave)="tooltipMouseLeave()">
-                {{ getColumnTitleLabel(column) }}
-              </span>
-            </ng-template>
+
+          <div [class.po-table-header-fixed-inner]="height">
+            <ng-container *ngTemplateOutlet="contentHeaderTemplate"></ng-container>
+          </div>
+
+          <ng-template #contentHeaderTemplate>
+            <span *ngIf="sort"
+              [class.po-table-header-icon-unselected]= "sortedColumn?.property !== column"
+              [class.po-table-header-icon-descending]= "sortedColumn?.property === column && sortedColumn.ascending"
+              [class.po-table-header-icon-ascending]= "sortedColumn?.property === column && !sortedColumn.ascending">
+            </span>
+            <span
+              class="po-table-header-ellipsis po-table-header-block"
+              [p-tooltip]="tooltipText"
+              (mouseenter)="tooltipMouseEnter($event)"
+              (mouseleave)="tooltipMouseLeave()">
+              {{ getColumnTitleLabel(column) }}
+            </span>
+          </ng-template>
         </th>
-        <th *ngIf="visibleActions.length > 1 && hasItems()" class="po-table-header-action"></th>
-        <th *ngIf="visibleActions.length === 1 && hasItems()" class="po-table-header-single-action"></th>
+        <th *ngIf="visibleActions.length > 1 && hasItems" class="po-table-header-action"></th>
+        <th *ngIf="visibleActions.length === 1 && hasItems" class="po-table-header-single-action"></th>
       </tr>
     </thead>
 
-    <tbody class="po-table-group-row" *ngIf="!hasItems()">
+    <tbody class="po-table-group-row" *ngIf="!hasItems">
       <tr class="po-table-row">
-        <td [colSpan]="columnCount()" class="po-table-no-data po-text-center">
+        <td [colSpan]="columnCount" class="po-table-no-data po-text-center">
           <span> {{ literals.noData }} </span>
         </td>
       </tr>
@@ -117,7 +116,7 @@
 
         </td>
         <td
-          *ngIf="(getColumnMasterDetail() !== undefined) && !hideDetail || hasRowTemplate"
+          *ngIf="columnMasterDetail && !hideDetail || hasRowTemplate"
           (click)="row.$showDetail = !row.$showDetail"
           class="po-table-column-detail-toggle">
           <span
@@ -128,7 +127,7 @@
           </span>
         </td>
 
-        <td *ngFor="let column of getMainColumns(), let columnIndex = index;"
+        <td *ngFor="let column of mainColumns; let columnIndex = index;"
           [style.width]="column.width" [style.max-width]="column.width" [style.min-width]="column.width"
           [class.po-table-column]="column.type !== 'icon'"
           [class.po-table-column-right]="column.type == 'currency' || column.type == 'number'"
@@ -164,10 +163,12 @@
               </po-table-column-icon>
             </span>
             <span *ngSwitchCase="'subtitle'">
-              <po-table-subtitle-circle [p-subtitle]="getSubtitleColumn(row, column)"></po-table-subtitle-circle>
+              <po-table-subtitle-circle [p-subtitle]="getSubtitleColumn(row, column)">
+              </po-table-subtitle-circle>
             </span>
             <span *ngSwitchCase="'label'">
-              <po-table-column-label [p-value]="getColumnLabel(row, column)"></po-table-column-label>
+              <po-table-column-label [p-value]="getColumnLabel(row, column)">
+              </po-table-column-label>
             </span>
             <span *ngSwitchDefault>{{ row[column.property] }}</span>
           </div>
@@ -189,7 +190,7 @@
       </tr>
 
       <tr *ngIf="hasRowTemplate && row.$showDetail && isShowRowTemplate(row, rowIndex)">
-        <td class="po-table-row-template-container" [colSpan]="columnCountForMasterDetail()">
+        <td class="po-table-row-template-container" [colSpan]="columnCountForMasterDetail">
 
           <ng-template
             [ngTemplateOutlet]="tableRowTemplate.templateRef"
@@ -200,12 +201,12 @@
       </tr>
 
       <tr *ngIf="isShowMasterDetail(row)">
-        <td class="po-table-column-detail" [colSpan]="columnCountForMasterDetail()">
+        <td class="po-table-column-detail" [colSpan]="columnCountForMasterDetail">
 
           <po-table-detail
             [p-checkbox]="checkbox && !detailHideSelect"
-            [p-detail]="getColumnMasterDetail().detail"
-            [p-items]="row[getNameColumnDetail()]"
+            [p-detail]="columnMasterDetail.detail"
+            [p-items]="row[nameColumnDetail]"
             (p-select-row)="selectDetailRow($event)">
           </po-table-detail>
 
@@ -214,7 +215,7 @@
     </tbody>
   </table>
 </ng-template>
-
+{{ check }}
 <po-popup #popup
   [p-actions]="actions"
   [p-target]="popupTarget">

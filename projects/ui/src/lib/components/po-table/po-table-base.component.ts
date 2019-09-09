@@ -85,9 +85,9 @@ export abstract class PoTableBaseComponent implements OnChanges {
     this._items = Array.isArray(items) ? items : [];
 
     // when haven't items, selectAll should be unchecked.
-    if (!this.hasItems()) {
+    if (!this.hasItems) {
       this.selectAll = false;
-    } else if (!this.hasColumns()) {
+    } else if (!this.hasColumns) {
       this.columns = this.getDefaultColumns(items[0]);
     }
   }
@@ -113,9 +113,13 @@ export abstract class PoTableBaseComponent implements OnChanges {
     if (this._columns.length) {
       this.setColumnLink();
       this.calculateWidthHeaders();
-    } else if (this.hasItems()) {
+    } else if (this.hasItems) {
       this._columns = this.getDefaultColumns(this.items[0]);
     }
+
+    this.setMainColumns();
+    this.setColumnMasterDetail();
+    this.setSubtitleColumns();
   }
 
   get columns() {
@@ -418,6 +422,10 @@ export abstract class PoTableBaseComponent implements OnChanges {
 
   selectAll = false;
   sortedColumn = { property: <PoTableColumn>null, ascending: true };
+  mainColumns: Array<PoTableColumn> = [];
+  columnMasterDetail: PoTableColumn;
+  subtitleColumns: Array<PoTableColumn> = [];
+  everyColumnsWidthPixels: boolean;
 
   private get sortType(): PoTableColumnSortType {
     return this.sortedColumn.ascending ? PoTableColumnSortType.Ascending : PoTableColumnSortType.Descending;
@@ -425,11 +433,33 @@ export abstract class PoTableBaseComponent implements OnChanges {
 
   constructor(private poDate: PoDateService) { }
 
+  private setMainColumns() {
+    this.mainColumns = this.getMainColumns();
+
+    this.setEveryColumnsWidthPixels();
+  }
+
+  private setColumnMasterDetail() {
+    this.columnMasterDetail = this.getColumnMasterDetail();
+  }
+
+  private setSubtitleColumns() {
+    this.subtitleColumns = this.getSubtitleColumns();
+  }
+
+  private setEveryColumnsWidthPixels() {
+    this.everyColumnsWidthPixels = this.verifyWidthColumnsPixels();
+  }
+
   ngOnChanges(): void {
     if (this.singleSelect || this.hideSelectAll) {
       this.selectAll = false;
       this.hideSelectAll = true;
     }
+  }
+
+  verifyWidthColumnsPixels() {
+    return this.mainColumns.length ? this.mainColumns.every(column => column.width && column.width.includes('px')) : false;
   }
 
   abstract calculateHeightTableContainer(height);
@@ -465,7 +495,6 @@ export abstract class PoTableBaseComponent implements OnChanges {
   // Colunas que são inseridas no <head> da tabela
   getMainColumns() {
     const typesValid = ['string', 'number', 'boolean', 'date', 'time', 'dateTime', 'currency', 'subtitle', 'link', 'label', 'icon'];
-
     return this.columns.filter(col => !col.type || typesValid.includes(col.type));
   }
 
@@ -495,9 +524,8 @@ export abstract class PoTableBaseComponent implements OnChanges {
   }
 
   // Retorna o nome da coluna do tipo detail
-  getNameColumnDetail() {
-    const detail = this.getColumnMasterDetail();
-    return detail ? detail.property : null;
+  get nameColumnDetail() {
+    return this.columnMasterDetail ? this.columnMasterDetail.property : null;
   }
 
   /**
@@ -514,11 +542,11 @@ export abstract class PoTableBaseComponent implements OnChanges {
     return this.items.filter(item => !item.$selected);
   }
 
-  hasColumns(): boolean {
+  get hasColumns(): boolean {
     return this.columns && this.columns.length > 0;
   }
 
-  hasItems(): boolean {
+  get hasItems(): boolean {
     return this.items && this.items.length > 0;
   }
 

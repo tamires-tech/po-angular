@@ -111,8 +111,14 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
 
   }
 
+  // get check() {
+  //   console.log('TABLE CHECK:: ')
+  //   return '';
+  // }
+
   get detailHideSelect() {
-    const masterDetail = this.getColumnMasterDetail();
+    const masterDetail = this.columnMasterDetail;
+
     return masterDetail && masterDetail.detail ? masterDetail.detail.hideSelect : false;
   }
 
@@ -162,16 +168,15 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
     }
   }
 
-  columnCountForMasterDetail() {
-    return (this.getMainColumns().length + 1) + (this.actions.length > 0 ? 1 : 0) + (this.checkbox ? 1 : 0);
+  get columnCountForMasterDetail() {
+    return (this.mainColumns.length + 1) + (this.actions.length > 0 ? 1 : 0) + (this.checkbox ? 1 : 0);
   }
 
-  columnCount() {
-    return (
-      this.getMainColumns().length +
+  get columnCount() {
+    return (this.mainColumns.length +
       (this.actions.length > 0 ? 1 : 0) +
       (this.checkbox ? 1 : 0) +
-      (!this.hideDetail && this.getColumnMasterDetail() !== undefined ? 1 : 0)
+      (!this.hideDetail && this.columnMasterDetail ? 1 : 0)
     );
   }
 
@@ -231,11 +236,6 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
     return column.label || capitalizeFirstLetter(column.property);
   }
 
-  verifyWidthColumnsPixels() {
-    const columns = this.getMainColumns();
-    return columns.length ? columns.every(column => column.width && column.width.includes('px')) : false;
-  }
-
   calculateWidthHeaders() {
     setTimeout(() => {
       if (this.height) {
@@ -250,7 +250,9 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
   }
 
   containsMasterDetail(row) {
-    return row[this.getNameColumnDetail()] && row[this.getNameColumnDetail()].length;
+    const rowValue = row[this.nameColumnDetail];
+
+    return rowValue && rowValue.length;
   }
 
   isShowRowTemplate(row, index: number): boolean {
@@ -264,7 +266,7 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
 
   isShowMasterDetail(row) {
     return !this.hideDetail &&
-      this.getNameColumnDetail() &&
+      this.nameColumnDetail &&
       row.$showDetail &&
       this.containsMasterDetail(row) &&
       !this.hasRowTemplate;
@@ -337,7 +339,7 @@ export class PoTableComponent extends PoTableBaseComponent implements AfterViewI
       this.selectAll = null;
     }
 
-    if (changesItems && !this.hasColumns() && this.hasItems()) {
+    if (changesItems && !this.hasColumns && this.hasItems) {
       this.columns = this.getDefaultColumns(this.items[0]);
     }
   }
