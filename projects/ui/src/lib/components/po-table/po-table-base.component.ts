@@ -118,8 +118,8 @@ export abstract class PoTableBaseComponent implements OnChanges {
     }
 
     this.setMainColumns();
-    this.setColumnMasterDetail();
-    this.setSubtitleColumns();
+    this.columnMasterDetail = this.getColumnMasterDetail();
+    this.subtitleColumns = this.getSubtitleColumns();
   }
 
   get columns() {
@@ -436,18 +436,6 @@ export abstract class PoTableBaseComponent implements OnChanges {
   private setMainColumns() {
     this.mainColumns = this.getMainColumns();
 
-    this.setEveryColumnsWidthPixels();
-  }
-
-  private setColumnMasterDetail() {
-    this.columnMasterDetail = this.getColumnMasterDetail();
-  }
-
-  private setSubtitleColumns() {
-    this.subtitleColumns = this.getSubtitleColumns();
-  }
-
-  private setEveryColumnsWidthPixels() {
     this.everyColumnsWidthPixels = this.verifyWidthColumnsPixels();
   }
 

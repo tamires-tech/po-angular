@@ -423,7 +423,7 @@ describe('PoTableBaseComponent:', () => {
   });
 
   it('should return name column detail', () => {
-    expect(component.getNameColumnDetail()).toBe('detail');
+    expect(component.nameColumnDetail).toBe('detail');
   });
 
   it('should return detail columns and not call sort array using detail column', () => {
@@ -436,11 +436,9 @@ describe('PoTableBaseComponent:', () => {
   });
 
   it('should return null because not have master-detail', () => {
-    const fakeThis = {
-      getColumnMasterDetail: () => this.columnsTable
-    };
+    component.columnMasterDetail = undefined;
 
-    expect(component.getNameColumnDetail.call(fakeThis)).toBeNull();
+    expect(component.nameColumnDetail).toBeNull();
   });
 
   it('should return columns with type or without type', () => {
@@ -475,13 +473,13 @@ describe('PoTableBaseComponent:', () => {
   it('should return false when items undefined in hasItems method', () => {
     component.items = undefined;
 
-    expect(component.hasItems()).toBeFalsy();
+    expect(component.hasItems).toBeFalsy();
   });
 
   it('should return true when has items in hasItems method', () => {
     component.items = [{ label: 'teste' }];
 
-    expect(component.hasItems()).toBeTruthy();
+    expect(component.hasItems).toBeTruthy();
   });
 
   describe('Methods:', () => {
@@ -742,24 +740,24 @@ describe('PoTableBaseComponent:', () => {
     });
 
     it('hasColumns: should return `true` if have columns and columns.length is greater then 0', () => {
-      expect(component.hasColumns()).toBe(true);
+      expect(component.hasColumns).toBe(true);
     });
 
     it('hasColumns: should return `false` if not have columns', () => {
       component.items = undefined;
       component.columns = undefined;
 
-      expect(component.hasColumns()).toBeFalsy();
+      expect(component.hasColumns).toBeFalsy();
     });
 
     it('hasItems: should return `true` if have items and items.length is greater then 0', () => {
-      expect(component.hasItems()).toBe(true);
+      expect(component.hasItems).toBe(true);
     });
 
     it('hasItems: should return `false` if not have items', () => {
       component.items = undefined;
 
-      expect(component.hasItems()).toBeFalsy();
+      expect(component.hasItems).toBeFalsy();
     });
 
     it(`sortArray: should call 'sortDate' when column type is 'date'.`, () => {
@@ -974,7 +972,7 @@ describe('PoTableBaseComponent:', () => {
     it('p-columns, p-items: should call `getDefaultColumns` with item if doesn`t have columns but has items to set default column', () => {
       const item = { table: 'table' };
 
-      spyOn(component, <any>'getDefaultColumns');
+      spyOn(component, <any>'getDefaultColumns').and.callThrough();
 
       component.items = [item];
       component.columns = [];

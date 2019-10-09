@@ -206,8 +206,7 @@ describe('PoTableComponent:', () => {
     component = fixture.componentInstance;
 
     component.items = [...items];
-    component.columns = [...columns];
-    component.columns.push(columnSubtitle);
+    component.columns = [...columns, columnSubtitle];
 
     fixture.detectChanges();
 
@@ -465,21 +464,21 @@ describe('PoTableComponent:', () => {
     component.hideDetail = false;
     component.actions = actions;
 
-    expect(component.columnCount()).toBe(8);
+    expect(component.columnCount).toBe(8);
   });
 
   it('should count the number columns of table with master-detail undefined', () => {
     component.columns = [...columns];
     component.checkbox = true;
     component.actions = actions;
-    expect(component.columnCount()).toBe(7);
+    expect(component.columnCount).toBe(7);
   });
 
   it('should count the number columns of table with checkbox false', () => {
     component.columns = [...columns];
     component.checkbox = false;
     component.actions = actions;
-    expect(component.columnCount()).toBe(6);
+    expect(component.columnCount).toBe(6);
   });
 
   it('should count the number columns of table with hideDetail false', () => {
@@ -487,14 +486,14 @@ describe('PoTableComponent:', () => {
     component.actions = actions;
     component.checkbox = true;
     component.hideDetail = true;
-    expect(component.columnCount()).toBe(7);
+    expect(component.columnCount).toBe(7);
   });
 
   it('should count the number columns of table without action', () => {
     component.columns = columnsWithDetail;
     component.checkbox = true;
     component.actions.length = 0;
-    expect(component.columnCount()).toBe(7);
+    expect(component.columnCount).toBe(7);
   });
 
   it('should toggle column sort', () => {
@@ -568,8 +567,8 @@ describe('PoTableComponent:', () => {
   });
 
   it('should find columnLabel columns', () => {
-    component.columns = [];
-    component.columns.push(labels);
+    component.columns = [ labels ];
+
     fixture.detectChanges();
 
     const labelColumn = tableElement.querySelector('.po-table-column-label');
@@ -675,15 +674,15 @@ describe('PoTableComponent:', () => {
     component.columns = [...columns];
     const countColumns = columns.length + 1;
 
-    expect(component.columnCountForMasterDetail()).toBe(countColumns);
+    expect(component.columnCountForMasterDetail).toBe(countColumns);
 
     component.actions = [...actions];
     fixture.detectChanges();
-    expect(component.columnCountForMasterDetail()).toBe(countColumns + 1);
+    expect(component.columnCountForMasterDetail).toBe(countColumns + 1);
 
     component.checkbox = true;
     fixture.detectChanges();
-    expect(component.columnCountForMasterDetail()).toBe(countColumns + 2);
+    expect(component.columnCountForMasterDetail).toBe(countColumns + 2);
   });
 
   it('should calculate when height is a number in function calculateHeightTableContainer', () => {
