@@ -35,18 +35,14 @@ const copyCollection = () =>
 /** SONAR */
 const sonarqube = task('sonarqube', function (callback) {
   const token = argv.token || '';
+  const url = argv.url || '';
+  const projectKey = argv.projectKey || '';
 
   sonarqubeScanner({
-    serverUrl: "http://sonarqube.po.portinari.com.br",
+    serverUrl: url,
     token: token,
-    options: { // Documentation: https://docs.sonarqube.org/display/SONAR/Analysis+Parameters
-      "sonar.projectKey": "portinari-ui",
-      "sonar.projectName": "portinari-ui",
-      "sonar.projectVersion": "1.0",
-      "sonar.test.inclusions": `projects/kendo/**/*.spec.ts`,
-      "sonar.test.exclusions": `projects/kendo/**/*.spec.ts`,
-      "sonar.exclusions": `projects/kendo/**/samples/**,index.ts,projects/kendo/**/*.js,projects/kendo/**/*.json,.*,projects/kendo/node_modules`,
-      "sonar.typescript.lcov.reportPaths": `projects/kendo/coverage/lcov.info`
+    options: {
+      "sonar.projectKey": projectKey
     }
   }, callback);
 });

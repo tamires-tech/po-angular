@@ -7,11 +7,14 @@ sudo: required
 branches:
   only:
     - master
+    - sonarqube
 
 addons:
   chrome: stable
+  sonarcloud: true
 
 before_script:
+  - sudo wget $SONAR_KEYSTORE -O /usr/bin/local.keystore
   - npm install -g @angular/cli
 
 cache:
@@ -19,7 +22,11 @@ cache:
   directories:
     - node_modules
 
+env:
+  - SONAR_SCANNER_OPTS=-Djavax.net.ssl.keyStore=/usr/bin/local.keystore
+
 script:
   - npm run lint
   - npm run build:lite
   - npm run test
+  - sonar-scanner -D sonar.projectKey=$SONAR_PROJECTKEY -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
