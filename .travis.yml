@@ -16,6 +16,7 @@ addons:
 before_script:
   - sudo wget $SONAR_KEYSTORE -O /usr/bin/local.keystore
   - npm install -g @angular/cli
+  - npm install browserslist caniuse-lite
 
 cache:
   npm: true
