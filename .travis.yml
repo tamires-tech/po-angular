@@ -14,7 +14,7 @@ addons:
   sonarcloud: true
 
 before_script:
-  - wget $SONAR_KEYSTORE -O local.keystore
+  - curl -o local.keystore $SONAR_KEYSTORE
   - npm install -g @angular/cli
   - npm install browserslist caniuse-lite
 
