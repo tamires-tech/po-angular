@@ -14,7 +14,7 @@ addons:
   sonarcloud: true
 
 before_script:
-  - sudo wget $SONAR_KEYSTORE -O /usr/bin/local.keystore
+  - wget $SONAR_KEYSTORE -O local.keystore
   - npm install -g @angular/cli
   - npm install browserslist caniuse-lite
 
@@ -24,7 +24,7 @@ cache:
     - node_modules
 
 env:
-  - SONAR_SCANNER_OPTS=-Djavax.net.ssl.keyStore=/usr/bin/local.keystore
+  - SONAR_SCANNER_OPTS=-Djavax.net.ssl.keyStore=local.keystore
 
 script:
   - npm run lint
