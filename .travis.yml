@@ -11,7 +11,7 @@ branches:
 
 addons:
   chrome: stable
-  sonarcloud: true
+#  sonarcloud: true
 
 before_script:
   - curl -o local.keystore $SONAR_KEYSTORE
@@ -30,4 +30,5 @@ script:
   - npm run lint
   - npm run build:lite
   - npm run test
-  - sonar-scanner -D sonar.projectKey=$SONAR_PROJECTKEY -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
+  - npm run sonarqube -- --token=$SONAR_PROJECTKEY --url=$SONAR_HOST_URL --projectKey=$SONAR_TOKEN
+#  - sonar-scanner -D sonar.projectKey=$SONAR_PROJECTKEY -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
