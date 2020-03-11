@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "migration-v2": {
+      "version": "2",
+      "description": "Updates @portinari/portinari-ui to v2",
+      "factory": "./ng-update/index#updateToV2"
+    }
+  }
+}

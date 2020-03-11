@@ -29,6 +29,7 @@
     "test:code-editor": "ng test code-editor --watch=false --code-coverage --browsers=ChromeHeadless --source-map",
     "test:dev": "ng test --browsers=ChromeHeadless",
     "build:schematics": "npm run tsc -- -p ./projects/ui/tsconfig.schematics.json",
+    "build:schema": "gulp schematics && gulp replaceVersion",
     "build:ui": "ng build ui --prod && gulp schematics && gulp replaceVersion && cd dist/portinari-ui && npm pack",
     "build:code-editor": "ng build code-editor --prod && gulp replaceVersion && cd dist/portinari-code-editor && npm pack",
     "build:templates": "ng build templates --prod && gulp replaceVersion && cd dist/portinari-templates && npm pack",
@@ -42,6 +43,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.4",
+    "@angular/cdk": "^9.1.2",
     "@angular/common": "~9.0.4",
     "@angular/compiler": "~9.0.4",
     "@angular/core": "~9.0.4",
@@ -66,6 +68,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.4",
     "@angular-devkit/build-ng-packagr": "~0.900.4",
+    "@angular-devkit/schematics": "^9.0.4",
     "@angular/cli": "~9.0.4",
     "@angular/compiler-cli": "~9.0.4",
     "@angular/language-service": "~9.0.4",

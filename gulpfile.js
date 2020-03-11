@@ -32,6 +32,10 @@ const copyCollection = () =>
   src([`${schematicsFolder}/collection.json`])
   .pipe(dest(distSchematicsFolder));
 
+  const copyMigration = () =>
+  src([`${schematicsFolder}/migrations.json`])
+  .pipe(dest(distSchematicsFolder));
+
 /** SONAR */
 const sonarqube = task('sonarqube', function (callback) {
   const token = argv.token || '';
@@ -54,4 +58,4 @@ const sonarqube = task('sonarqube', function (callback) {
 /** Exported Functions */
 exports.sonarqube = sonarqube;
 exports.replaceVersion = replaceVersion;
-exports.schematics = series(buildSchematics, parallel(copyCollection, copySchemas, copyFiles));
+exports.schematics = series(buildSchematics, parallel(copyCollection, copyMigration, copySchemas, copyFiles));

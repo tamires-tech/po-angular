@@ -11,6 +11,12 @@
     "url": "https://github.com/portinariui/portinari-angular"
   },
   "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "migrations": "./schematics/migration.json",
+    "packageGroup": [
+      "@portinari/portinari-ui"
+    ]
+  },
   "dependencies": {
     "@portinari/style": "0.0.0-PLACEHOLDER"
   },
