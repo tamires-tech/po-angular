@@ -146,7 +146,7 @@ describe('PoUploadDragDropAreaComponent:', () => {
 
       const overlayLabel = nativeElement.querySelector('.po-upload-drag-drop-area-overlay-label');
 
-      expect(overlayLabel.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].dropFoldersHere);
+      expect(overlayLabel.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].dropFoldersHere);
     });
 
     it('should apply literals `dropFilesHere`, if directoryCompatible is true ', () => {
@@ -159,7 +159,7 @@ describe('PoUploadDragDropAreaComponent:', () => {
 
       const overlayLabel = nativeElement.querySelector('.po-upload-drag-drop-area-overlay-label');
 
-      expect(overlayLabel.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].dropFilesHere);
+      expect(overlayLabel.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].dropFilesHere);
     });
 
     it('should apply literals `dragFoldersHere` and `selectFolderOnComputer`, if directoryCompatible is true ', () => {
@@ -172,8 +172,8 @@ describe('PoUploadDragDropAreaComponent:', () => {
       const dragAreaLabel = nativeElement.querySelector('.po-upload-drag-drop-area-label');
       const dragAreaButton = nativeElement.querySelector('.po-upload-drag-drop-area-select-files');
 
-      expect(dragAreaLabel.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].dragFoldersHere);
-      expect(dragAreaButton.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].selectFolderOnComputer);
+      expect(dragAreaLabel.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].dragFoldersHere);
+      expect(dragAreaButton.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].selectFolderOnComputer);
     });
 
     it('should apply literals `dragFilesHere` and `selectFilesOnComputer`, if directoryCompatible is true ', () => {
@@ -186,8 +186,8 @@ describe('PoUploadDragDropAreaComponent:', () => {
       const dragAreaLabel = nativeElement.querySelector('.po-upload-drag-drop-area-label');
       const dragAreaButton = nativeElement.querySelector('.po-upload-drag-drop-area-select-files');
 
-      expect(dragAreaLabel.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].dragFilesHere);
-      expect(dragAreaButton.innerHTML).toBe(poUploadLiteralsDefault[poLocaleDefault].selectFilesOnComputer);
+      expect(dragAreaLabel.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].dragFilesHere);
+      expect(dragAreaButton.innerText).toBe(poUploadLiteralsDefault[poLocaleDefault].selectFilesOnComputer);
     });
   });
 
