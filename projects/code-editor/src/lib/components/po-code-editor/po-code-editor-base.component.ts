@@ -188,8 +188,8 @@ export abstract class PoCodeEditorBaseComponent implements ControlValueAccessor 
     return `${this._height}px`;
   }
 
-  onTouched = (value: any) => undefined;
-  onChangePropagate = (value: any) => undefined;
+  onTouched = (value: any) => {};
+  onChangePropagate = (value: any) => {};
 
   getOptions() {
     return { language: this.language, theme: this.theme, readOnly: this.readonly };

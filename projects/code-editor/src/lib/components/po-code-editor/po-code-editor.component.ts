@@ -1,22 +1,14 @@
-import { AfterViewInit, Component, DoCheck, ElementRef, forwardRef, NgZone, ViewChild, Provider } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, forwardRef, NgZone, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { PoCodeEditorBaseComponent } from './po-code-editor-base.component';
 import { PoCodeEditorRegister } from './po-code-editor-register.service';
 
+let loadedMonaco: boolean = false;
+let loadPromise: Promise<void>;
 declare const monaco: any;
 // tslint:disable-next-line
 declare const require: any;
-
-/* istanbul ignore next */
-const providers: Array<Provider> = [
-  {
-    provide: NG_VALUE_ACCESSOR,
-    // tslint:disable-next-line
-    useExisting: forwardRef(() => PoCodeEditorComponent),
-    multi: true
-  }
-];
 
 /**
  * @docsExtends PoCodeEditorBaseComponent
@@ -48,12 +40,16 @@ const providers: Array<Provider> = [
 @Component({
   selector: 'po-code-editor',
   templateUrl: './po-code-editor.component.html',
-  providers
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PoCodeEditorComponent),
+      multi: true
+    }
+  ]
 })
 export class PoCodeEditorComponent extends PoCodeEditorBaseComponent implements AfterViewInit, DoCheck {
   canLoad = false;
-  loadedMonaco = false;
-  loadPromise: Promise<void>;
 
   @ViewChild('editorContainer', { static: true }) editorContainer: ElementRef;
 
@@ -61,10 +57,9 @@ export class PoCodeEditorComponent extends PoCodeEditorBaseComponent implements 
     super();
   }
 
-  /* istanbul ignore next */
   ngAfterViewInit(): void {
-    if (this.loadedMonaco) {
-      this.loadPromise.then(() => {
+    if (loadedMonaco) {
+      loadPromise.then(() => {
         setTimeout(() => {
           if (this.el.nativeElement.offsetWidth) {
             this.registerCustomLanguage();
@@ -75,8 +70,8 @@ export class PoCodeEditorComponent extends PoCodeEditorBaseComponent implements 
         });
       });
     } else {
-      this.loadedMonaco = true;
-      this.loadPromise = new Promise<void>((resolve: any) => {
+      loadedMonaco = true;
+      loadPromise = new Promise<void>((resolve: any) => {
         const onGotAmdLoader: any = () => {
           (<any>window).require.config({ paths: { 'vs': './assets/monaco/vs' } });
           (<any>window).require(['vs/editor/editor.main'], () => {
