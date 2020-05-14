@@ -6,17 +6,24 @@ sudo: required
 branches:
   only:
     - master
+    - sonarqube
 
 addons:
   chrome: stable
+#  sonarcloud: true
 
 before_script:
+  - curl -o local.keystore $SONAR_KEYSTORE
   - npm install -g @angular/cli
+  - npm install browserslist caniuse-lite
 
 cache:
   npm: true
   directories:
     - node_modules
+
+env:
+  - SONAR_SCANNER_OPTS=-Djavax.net.ssl.keyStore=local.keystore
 
 script:
   - commitlint-travis
@@ -24,3 +31,5 @@ script:
   - npm run lint
   - npm run build:lite
   - npm run test
+  - npm run sonarqube -- --token=$SONAR_PROJECTKEY --url=$SONAR_HOST_URL --projectKey=$SONAR_TOKEN
+#  - sonar-scanner -D sonar.projectKey=$SONAR_PROJECTKEY -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X

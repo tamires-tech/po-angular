@@ -53,21 +53,16 @@ const copySyncMigrations = () => src([`${syncSchematicsFolder}/migrations.json`]
 /** SONAR */
 const sonarqube = task('sonarqube', function (callback) {
   const token = argv.token || '';
+  const url = argv.url || '';
+  const projectKey = argv.projectKey || '';
 
-  sonarqubeScanner(
-    {
-      serverUrl: 'http://sonarqube.po-ui.com.br',
-      token: token,
-      options: {
-        // Documentation: https://docs.sonarqube.org/display/SONAR/Analysis+Parameters
-        'sonar.projectKey': 'po-ui',
-        'sonar.projectName': 'po-ui',
-        'sonar.projectVersion': '1.0',
-        'sonar.exclusions': `index.ts,.*`
-      }
-    },
-    callback
-  );
+  sonarqubeScanner({
+    serverUrl: url,
+    token: token,
+    options: {
+      "sonar.projectKey": projectKey
+    }
+  }, callback);
 });
 
 /** Exported Functions */
