@@ -9,6 +9,7 @@ import { SamplePoTableComponentStatus } from './sample-po-table-components.enum'
 @Component({
   selector: 'sample-po-table-components',
   templateUrl: './sample-po-table-components.component.html',
+  styleUrls: ['./sample-po-table-components.component.css'],
   providers: [SamplePoTableComponentsService]
 })
 export class SamplePoTableComponentsComponent {
@@ -18,6 +19,7 @@ export class SamplePoTableComponentsComponent {
   title: any;
 
   public readonly columns: Array<PoTableColumn> = [
+    { property: 'type', label: 'Status Template', type: 'columnTemplate', width: '10%' },
     {
       property: 'status',
       type: 'label',

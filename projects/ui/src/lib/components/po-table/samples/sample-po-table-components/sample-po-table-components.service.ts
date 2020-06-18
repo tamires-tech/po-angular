@@ -12,7 +12,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-select',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -21,7 +22,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-checkbox-group',
       extra: 'Best Practices',
       extras: ['Short and objective texts for items', 'Use with short lists', 'For big lists use PO Multiselect'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -30,7 +32,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-number',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 1
+      status: 1,
+      type: 'experimental'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -39,7 +42,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-combo',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -48,7 +52,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-multiselect',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 1
+      status: 1,
+      type: 'experimental'
     },
     {
       favorite: [],
@@ -57,7 +62,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-grid',
       extra: 'Features',
       extras: [],
-      status: 2
+      status: 2,
+      type: 'roadMap'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -66,7 +72,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-input',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -75,7 +82,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-textarea',
       extra: 'Best Practices',
       extras: ['Recommended to large texts like observations and details', 'For short texts use po-input'],
-      status: 1
+      status: 1,
+      type: 'experimental'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -84,7 +92,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-datepicker',
       extra: 'Features',
       extras: ['Multiple idioms ( pt, es , en)', 'Custom date formats', 'Period validation (start date and end date)'],
-      status: 1
+      status: 1,
+      type: 'experimental'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -93,7 +102,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-email',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -102,7 +112,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-url',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -111,7 +122,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-password',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -120,7 +132,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-login',
       extra: 'Features',
       extras: ['Filter options (starts, contains, ends)', 'Custom services', 'Navigation by keys'],
-      status: 0
+      status: 0,
+      type: 'stable'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -129,7 +142,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-upload',
       extra: 'Features',
       extras: ['Multiple file selection', 'Automatic upload after click', 'File format and size restriction'],
-      status: 1
+      status: 1,
+      type: 'experimental'
     },
     {
       favorite: ['favorite', 'documentation'],
@@ -138,7 +152,8 @@ export class SamplePoTableComponentsService {
       link: '/documentation/po-avatar',
       extra: 'Features',
       extras: ['Multiple sizes', 'Default image'],
-      status: 0
+      status: 0,
+      type: 'stable'
     }
   ];
 
